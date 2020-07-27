@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.luwenjing.mapper.MeetMapper">
+	<select id="list" resultType="com.luwenjing.bean.Meeting" parameterType="map">
+		SELECT m.*,GROUP_CONCAT(t.tname) tname FROM 
+		meeting m , type t WHERE m.tid=t.tid
+		GROUP BY m.id
+	</select>
+	<select id="sel" resultType="com.luwenjing.bean.Type">
+		SELECT * FROM type
+	</select>
+	<insert id="add" parameterType="com.luwenjing.bean.Meeting">
+		INSERT INTO meeting(code,name,start_time,end_time,tid) 
+		VALUES (#{code},#{name},#{start_time},#{end_time},#{tid})
+	</insert>
+	<select id="queryHui" resultType="com.luwenjing.bean.Meeting">
+		SELECT * FROM meeting WHERE id=#{id}
+	</select>
+	<update id="update" parameterType="com.luwenjing.bean.Meeting">
+		UPDATE meeting SET code=#{code},name=#{name},start_time=#{start_time},
+		end_time=#{end_time},tid=#{tid} where id=#{id}
+	</update>
+</mapper>
